@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/decoder.schema.json",
+  "title": "Video Decoder Parameters",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "max_threads": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 256
+    },
+    "dpb_size": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+    },
+    "reorder_frames": {
+      "type": "boolean"
+    },
+    "low_delay": {
+      "type": "boolean"
+    },
+    "error_concealment": {
+      "type": "string",
+      "enum": [
+        "off",
+        "temporal",
+        "spatial",
+        "auto"
+      ]
+    },
+    "skip_nonref": {
+      "type": "boolean"
+    },
+    "deblock": {
+      "type": "boolean"
+    },
+    "sao": {
+      "type": "boolean"
+    },
+    "film_grain": {
+      "type": "boolean"
+    },
+    "jitter_buf_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5000
+    },
+    "sync_tolerance_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 500
+    },
+    "av_sync": {
+      "type": "string",
+      "enum": [
+        "video_master",
+        "audio_master",
+        "external_clock"
+      ]
+    },
+    "timestamp_correction": {
+      "type": "boolean"
+    },
+    "color_space": {
+      "type": "string",
+      "enum": [
+        "BT.709",
+        "BT.2020",
+        "BT.601",
+        "DCI-P3"
+      ]
+    },
+    "range": {
+      "type": "string",
+      "enum": [
+        "limited",
+        "full"
+      ]
+    },
+    "hdr_tone_map": {
+      "type": "string",
+      "enum": [
+        "off",
+        "hable",
+        "reinhard",
+        "aces"
+      ]
+    },
+    "hdr_eotf": {
+      "type": "string",
+      "enum": [
+        "SDR",
+        "PQ",
+        "HLG"
+      ]
+    },
+    "scaler": {
+      "type": "string",
+      "enum": [
+        "nearest",
+        "bilinear",
+        "bicubic",
+        "lanczos",
+        "spline"
+      ]
+    },
+    "denoise": {
+      "type": "string",
+      "enum": [
+        "off",
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "deband": {
+      "type": "string",
+      "enum": [
+        "off",
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "sharpen": {
+      "type": "string",
+      "enum": [
+        "off",
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "deinterlace_mode": {
+      "type": "string",
+      "enum": [
+        "tff",
+        "bff",
+        "prog"
+      ]
+    },
+    "deinterlace_algo": {
+      "type": "string",
+      "enum": [
+        "off",
+        "yadif",
+        "nnedi3",
+        "bwdif"
+      ]
+    },
+    "frame_dup_thresh_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 200
+    },
+    "max_output_latency_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5000
+    },
+    "cap_max_res_w": {
+      "type": "integer",
+      "minimum": 16,
+      "maximum": 16384
+    },
+    "cap_max_res_h": {
+      "type": "integer",
+      "minimum": 16,
+      "maximum": 16384
+    },
+    "output_format": {
+      "type": "string",
+      "enum": [
+        "NV12",
+        "P010",
+        "I420",
+        "YV12",
+        "RGB24",
+        "BGR24"
+      ]
+    }
+  },
+  "required": [
+    "max_threads",
+    "dpb_size",
+    "reorder_frames",
+    "av_sync",
+    "output_format"
+  ]
+}
