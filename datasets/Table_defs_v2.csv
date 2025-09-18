@@ -1,0 +1,11 @@
+header,type,allowed_values,description
+FEED_ID,text,FD-[A-Z0-9]{6},Opaque identifier for a single video feed or multicast stream.
+THEATER,enum,{CONUS|PAC|EUR|ME|AFR|ARC},"Operational theater: Continental US, Pacific, Europe, Middle East, Africa, Arctic."
+FRRATE,float,"Typical: 15.0–60.0 fps (incl. 23.976, 29.97, 59.94)",Nominal frame rate of the feed in frames per second.
+RES_W,integer,Common: 640–3840,Encoded frame width in pixels.
+RES_H,integer,Common: 480–2160,Encoded frame height in pixels.
+CODEC,enum,{H264|H265|AV1|VP9|MPEG2},Compression format used for the stream.
+ENCR,boolean,{true|false},Whether the transport or at-rest stream is encrypted.
+LAT_MS,integer,Approx. 15–2200,"Estimated end-to-end latency from sensor to consumer, in milliseconds."
+MODL_TAG,text,"E.g., Viper-VL, Hydra-ISR, Raptor-Det",Primary analytics/detector model applied to the feed.
+CIV_OK,boolean,{true|false},Flag indicating the feed passed civilian-safety filtering policies.
