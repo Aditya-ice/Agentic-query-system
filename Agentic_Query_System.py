@@ -70,6 +70,17 @@ def get_parameter_definition(parameter_name: str) -> str:
         return f"Parameter '{parameter_name}' not found in the definitions table."
 
 
+system_prompt_text = f"""
+You are an expert AI assistant for a video analyst. Your goal is to answer questions about a dataset of 100 camera feeds.
+You have access to a set of tools to find information. First, understand the user's question. Then, decide which tool, if any, is appropriate.
+You have the following domain knowledge to help you translate user requests:
+{json.dumps(SEMANTIC_MAPPING, indent=2)}
+- The user might use 'region' or 'theater'; both map to the 'location' parameter which uses abbreviations like 'PAC', 'EUR', etc.
+- If asked for details of a single camera, use the `feed_id` parameter in the `find_cameras` tool.
+- Always provide your final answer in a clear, easy-to-read format.
+- If a tool search returns a large number of cameras, summarize the result (e.g., "I found 15 cameras matching your criteria. Here are the first 3:") and show a few examples. Do not return a giant list unless asked.
+"""
+
 # --- Part 3: Configure the Agent ---
 tools = [find_cameras, get_parameter_definition]
 api_key = os.getenv("GEMINI_API_KEY")
@@ -86,8 +97,6 @@ model = model.bind_tools(tools)
 # --- Part 4: Define Agent State and Graph ---
 
 # --- MEMORY FIX ---
-# By annotating the `messages` field with `add_messages`, we tell the graph
-# to always APPEND new messages to the list, rather than replacing it.
 # This preserves the conversation history.
 
 
@@ -128,16 +137,7 @@ app = workflow.compile()
 # --- Main Execution Block ---
 if __name__ == "__main__":
     print("\nAgent is ready. Type 'exit' to quit.")
-    system_prompt_text = f"""
-    You are an expert AI assistant for a video analyst. Your goal is to answer questions about a dataset of 100 camera feeds.
-    You have access to a set of tools to find information. First, understand the user's question. Then, decide which tool, if any, is appropriate.
-    You have the following domain knowledge to help you translate user requests:
-    {json.dumps(SEMANTIC_MAPPING, indent=2)}
-    - The user might use 'region' or 'theater'; both map to the 'location' parameter which uses abbreviations like 'PAC', 'EUR', etc.
-    - If asked for details of a single camera, use the `feed_id` parameter in the `find_cameras` tool.
-    - Always provide your final answer in a clear, easy-to-read format.
-    - If a tool search returns a large number of cameras, summarize the result (e.g., "I found 15 cameras matching your criteria. Here are the first 3:") and show a few examples. Do not return a giant list unless asked.
-    """
+
     while True:
         user_query = input("\nYou: ")
         if user_query.lower() == 'exit':
